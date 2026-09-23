@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>JS Basics Lab Practical</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; }
+        section { border: 1px solid #ccc; padding: 15px; margin-bottom: 20px; }
+        h2 { color: #003c78; }
+        button { margin: 5px; padding: 5px 10px; }
+        input[type="text"] { padding: 5px; width: 200px; }
+    </style>
+</head>
+<body>
+
+<h1>Lab Practical - JavaScript Basics</h1>
+<section>
+    <h2>Experiment 1: document.write()</h2>
+    <p>This is a static paragraph.</p>
+    <script>
+        document.write("<p><strong>Extra content added by document.write()</strong></p>");
+    </script>
+</section>
+<section>
+    <h2>Experiment 2a: Internal Script Function</h2>
+    <button onclick="popupInternal('Hello from internal script!')">Call Internal popup()</button>
+    <script>
+        function popupInternal(x) {
+            alert(x);
+        }
+    </script>
+</section>
+<section>
+    <h2>Experiment 2b: External Script Function</h2>
+    <button onclick="popupExternal('Hello from external script!')">Call External popup()</button>
+    <script src="popup.js"></script>
+</section>
+
+<!-- 实验 3: 从文本框获取内容 -->
+<section>
+    <h2>Experiment 3: Get Content from Textbox</h2>
+    <input type="text" id="reply" placeholder="Type something">
+    <button onclick="showReply()">Submit</button>
+    <script>
+        function showReply() {
+            var text = document.getElementById('reply').value;
+            alert(text);
+        }
+    </script>
+</section>
+
+<!-- 实验 4: if 语句 + 计数器 + 条件表达式 -->
+<section>
+    <h2>Experiment 4: if Statements & Counter</h2>
+    <input type="text" id="fredInput" placeholder="Type 'fred'">
+    <button onclick="checkFred()">Check</button>
+    <p id="fredOutput"></p>
+    <script>
+        var fredCounter = 0; // 计数器
+        function checkFred() {
+            var input = document.getElementById('fredInput').value;
+            // 1. 仅当包含 'fred' 时执行
+            if (input.indexOf('fred') !== -1) {
+                fredCounter++; // 增加计数
+                // 3. 使用条件表达式（三元运算符）将 fred 转为大写
+                var displayText = (input === 'fred') ? 'FRED' : input;
+                // 显示计数和内容
+                alert("Popup count: " + fredCounter + "\nText: " + displayText);
+                document.getElementById('fredOutput').innerHTML = "Last popup: " + displayText;
+            }
+        }
+    </script>
+</section>
+
+<!-- 实验 5: for 循环 -->
+<section>
+    <h2>Experiment 5: for Loops</h2>
+    <p id="output"></p>
+    <script>
+        // 5.1 显示 1 到 10
+        var out = document.getElementById('output');
+        out.innerHTML = "Numbers 1 to 10: ";
+        for (var i = 1; i <= 10; i++) {
+            out.innerHTML += i + " ";
+        }
+    </script>
+    <br>
+    <!-- 5.2 用户输入上限 -->
+    <input type="text" id="limitInput" placeholder="Enter upper limit">
+    <button onclick="showNumbersUpToLimit()">Show Numbers</button>
+    <p id="limitOutput"></p>
+    <script>
+        function showNumbersUpToLimit() {
+            var limitText = document.getElementById('limitInput').value;
+            var limit = parseInt(limitText);
+            // 检查是否为有效数字
+            if (isNaN(limit)) {
+                alert("Not a valid number: " + limitText);
+                return;
+            }
+            var result = "Numbers from 1 to " + limit + ": ";
+            for (var i = 1; i <= limit; i++) {
+                result += i + " ";
+            }
+            document.getElementById('limitOutput').innerHTML = result;
+        }
+    </script>
+</section>
+
+<!-- 实验 6: 数组操作 -->
+<section>
+    <h2>Experiment 6: Arrays</h2>
+    <input type="text" id="arrayInput" placeholder="Enter item">
+    <button onclick="addItem()">Add</button>
+    <button onclick="showItems()">Show</button>
+    <button onclick="clearItems()">Clear</button>
+    <button onclick="deleteLast()">Delete-Last</button>
+    <h3 id="arrayOutput"></h3>
+    <script>
+        var itemsArray = []; // 空数组
+        function addItem() {
+            var item = document.getElementById('arrayInput').value;
+            if (item) {
+                itemsArray.push(item);
+                document.getElementById('arrayInput').value = '';
+            }
+        }
+        function showItems() {
+            // 将数组所有元素拼接成字符串显示到 h3
+            document.getElementById('arrayOutput').innerHTML = itemsArray.join(', ');
+        }
+        function clearItems() {
+            itemsArray = []; // 清空数组
+            document.getElementById('arrayOutput').innerHTML = '';
+        }
+        function deleteLast() {
+            if (itemsArray.length > 0) {
+                itemsArray.pop(); // 删除最后一个
+                showItems(); // 更新显示
+            }
+        }
+    </script>
+</section>
+
+</body>
+</html>
