@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>158.258 Web Development - JavaScript Exercises</title>
+    <script src="randominteger.js"></script>
+    
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+        section { margin-bottom: 40px; padding: 15px; border: 1px solid #ccc; border-radius: 5px; }
+        h2 { color: #0056b3; }
+        .history { color: #888; font-size: 0.9em; }
+        button { margin-top: 10px; padding: 5px 10px; cursor: pointer; }
+    </style>
+</head>
+<body>
+    <section>
+        <h2>Exercise 1: document.write</h2>
+        <script>
+            document.write('<h3>This is a heading from JS</h3>');
+            document.write('<p>This is a paragraph of text added by JavaScript using document.write.</p>');
+        </script>
+    </section>
+    <section>
+        <h2>Exercise 2: Navigator Object</h2>
+        <p id="navInfo"></p>
+        <script>
+            var navText = "Browser Info: " + navigator.userAgent + "<br>Language: " + navigator.language;
+            document.getElementById('navInfo').innerHTML = navText;
+        </script>
+    </section>
+    <section>
+        <h2>Exercise 3: External JS (Random Integer)</h2>
+        <p>Random number between 1 and 100 (from external file): <strong id="randNum"></strong></p>
+        <button onclick="showRandom()">Generate Number</button>
+        <script>
+            function showRandom() {
+                var num = randomInt();
+                document.getElementById('randNum').innerHTML = num;
+            }
+            document.getElementById('randNum').innerHTML = randomInt();
+        </script>
+    </section>
+    <section>
+        <h2>Exercise 4: Number Guessing Game</h2>
+        <div id="gameArea">
+            <p id="gameMsg">Click "Start Game" to play! You have 10 turns.</p>
+            <input type="number" id="guessInput" placeholder="Enter 1-100">
+            <button onclick="makeGuess()">Guess</button>
+            <button onclick="startGame()">Restart Game</button>
+            <p class="history">Previous guesses: <span id="historyList"></span></p>
+            <p>Turns left: <span id="turnsLeft">10</span></p>
+        </div>
+        
+        <script>
+            var targetNumber;
+            var turns;
+            var guesses;
+            function startGame() {
+                targetNumber = randomInt(); 
+                turns = 10;
+                guesses = [];
+                
+                document.getElementById('gameMsg').innerHTML = "Game started! Guess a number between 1 and 100.";
+                document.getElementById('guessInput').value = '';
+                document.getElementById('turnsLeft').innerHTML = turns;
+                document.getElementById('historyList').innerHTML = '';
+            }
+
+            function makeGuess() {
+                if (turns <= 0) {
+                    alert("Game over! Click Restart to play again.");
+                    return;
+                }
+
+                var userGuess = parseInt(document.getElementById('guessInput').value);
+                if (isNaN(userGuess)) {
+                    alert("Please enter a valid number!");
+                    return;
+                }
+
+                guesses.push(userGuess);
+                turns--;
+
+                var msg = "";
+                if (userGuess === targetNumber) {
+                    msg = "Correct! You guessed it in " + (10 - turns) + " turns!";
+                    turns = 0; 
+                } else if (userGuess < targetNumber) {
+                    msg = "? Wrong! Too low.";
+                } else {
+                    msg = "? Wrong! Too high.";
+                }
+                document.getElementById('gameMsg').innerHTML = msg;
+                document.getElementById('turnsLeft').innerHTML = turns;
+                document.getElementById('historyList').innerHTML = guesses.join(", ");
+                document.getElementById('guessInput').value = '';
+                if (turns === 0 && userGuess !== targetNumber) {
+                    document.getElementById('gameMsg').innerHTML += "<br>Game Over! The number was " + targetNumber + ". Click Restart to play again.";
+                }
+            }
+            startGame();
+        </script>
+    </section>
+
+</body>
+</html>
